@@ -1,0 +1,176 @@
+// Define BaseNRepresentation function to convert number into base representation
+function BaseNRepresentation(number, base, length)
+    digits := [];
+    quotient := number;
+
+    for i in [1..length] do
+        // Perform the division and store the remainder
+        remainder := quotient mod base;
+        quotient := quotient div base;
+        Append(~digits, remainder);
+    end for;
+
+    // Reverse the digits to get the correct order
+    digits := Reverse(digits);
+    
+    return digits;
+end function;
+
+// Revised GeneratePolynomials function with six factors: a1, a2, a3, b, c, d
+function GeneratePolynomials(n)
+    Z4 := IntegerRing(4);  // Declare Z4 here
+    P4<x> := PolynomialRing(Z4);  // Declare P4 here
+    Fac := CyclotomicFactors(Z4, 2*n);  // Factors of X^(2n) - 1
+    l := #Fac;
+    
+    // Ensure l is even
+    if l mod 2 ne 0 then
+        l := l - 1;
+    end if;
+    
+    // Adjust number of possibilities for even length
+    npossibilities := 6^l - 1; 
+    
+    posslist := [];
+    for i in [0..npossibilities] do
+        representation := BaseNRepresentation(i, 6, l);
+        Append(~posslist, representation);
+    end for;
+    
+    generator_polynomials := [];
+    
+    for j in [1..#posslist] do
+        combination := posslist[j];
+        
+        // Extract factors based on the combination
+        a1 := P4!1;
+        a2 := P4!1;
+        a3 := P4!1;
+        b := P4!1;
+        c := P4!1;
+        d := P4!1;
+        
+        for i in [1..l] do
+            factor := Fac[i];
+            
+            // Choose factors for a1, a2, a3, b, c, and d based on combination
+            case combination[i]
+                when 0:
+                    a1 *:= factor;
+                when 1:
+                    a2 *:= factor;
+                when 2:
+                    a3 *:= factor;
+                when 3:
+                    b *:= factor;
+                when 4:
+                    c *:= factor;
+                when 5:
+                    d *:= factor;
+            end case;
+        end for;
+        
+        // Calculate b_tilde based on b
+        b := (a1 * a2 * a3).1;
+        b_tilde := b + 2*(b mod 2);  // b_tilde = b (mod 2Z4[X]))
+        
+        // Generate generator polynomial based on the theorem
+        gen_poly := (a1*(x^2)*a2*(x^2)*a3*(x^2)*b_tilde*(x)*c(x), 2*a1*(x^2)*a2(x)*b(x));
+        
+        Append(~generator_polynomials, gen_poly);
+    end for;
+    
+    return generator_polynomials;
+end function;
+
+// Function to get code characteristics: k1, k2, and minimum Lee weight
+function characteristics(n, generator)
+    C := CyclicCode(n, generator);
+    TimeLimit := 10;
+    skippedTime := 0;
+    skippedDimCap := 0;
+    len := Length(C);
+    k1 := 0;
+    B := Basis(C);
+    for i in [1..#B] do
+        j := 1;
+        while B[i][j] eq 0 do
+            j := j + 1;
+        end while;
+        if B[i][j] eq 1 then
+            k1 := k1 + 1;
+        end if;
+    end for;
+    Dim := PseudoDimension(C);
+    k2 := Dim - k1;
+    degreeGen := Degree(generator);
+    if n gt 61 then
+        if Minimum(n - degreeGen, degreeGen) le 30 then
+            MinLeeW := MinimumLeeWeight(C : MaximumTime := TimeLimit);
+            if MinLeeW eq -1 then
+                skippedTime +:= 1;
+            end if;
+        else
+            skippedDimCap +:= 1;
+        end if;
+    else
+        MinLeeW := MinimumLeeWeight(C); // No time limit when n is smaller or equal to 61
+    end if;
+    
+    // Prepare list of characteristics for output
+    penu_list := [n, Dim, k1, k2, MinLeeW];
+    u_list := [];
+    
+    for item in penu_list do
+        Append(~u_list, "\"" cat IntegerToString(item) cat "\"");
+    end for;
+    
+    gen_string := "\"" cat Sprint(generator) cat "\"";
+    Append(~u_list, gen_string);
+    
+    print u_list;  // Optional: Print the characteristics list
+    
+    return u_list;
+end function;
+
+// Procedure to write the header to the file
+procedure Opener(file, data_head)
+    for header in data_head do
+        Write(file, header cat ",");
+    end for;
+    Write(file, "\n");
+end procedure;
+
+// Procedure to write data to the file
+procedure Write2File(file, data_rows)
+    CSV_String := "";
+    for data in data_rows do
+        CSV_String := CSV_String cat data cat ",";
+    end for;
+    CSV_String := CSV_String[1..#CSV_String-1] cat "\n";
+    Write(file, CSV_String);
+end procedure;
+
+// Main function
+procedure main()
+    data_Header := ["n", "Dimension", "k1", "k2", "Distance", "generator"];
+    n := 10;  // Example: Replace with your desired even n
+    
+    filename := "/home/belghith1/Exhaustive_Z4/Cyclic/Output/Len" cat IntegerToString(n) cat ".csv";
+    
+    // Open the file for writing
+    file := Open(filename, "w");
+    
+    Opener(file, data_Header);
+    polyList := GeneratePolynomials(n);
+    
+    for possgen in polyList do
+        code_data := characteristics(n, possgen);
+        Write2File(file, code_data);
+    end for;
+    
+    Flush(file); // Correct way to close the file in Magma
+end procedure;
+
+// Run the main procedure
+main();

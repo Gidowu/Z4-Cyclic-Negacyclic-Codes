@@ -1,0 +1,12 @@
+Magma V2.28-8     Thu Jun 27 2024 12:45:59 on supercomputer [Seed = 4175628593]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+>>     n := {n};
+             ^
+User error: Identifier 'n' has not been declared or assigned
+
+>> main();
+   ^
+User error: Identifier 'main' has not been declared or assigned
+
+Total time: 0.040 seconds, Total memory usage: 32.09MB
