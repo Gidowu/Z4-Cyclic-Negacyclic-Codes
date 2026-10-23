@@ -1,0 +1,25 @@
+Magma V2.28-8     Fri Jun 14 2024 11:22:25 on supercomputer [Seed = 2627113274]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len75.m"
+[ "75", "0", "0", "0", "150", "3*x^75 + 1" ]
+[ "75", "20", "20", "0", "6", "3*x^55 + x^50 + 3*x^30 + x^25 + 3*x^5 + 1" ]
+[ "75", "20", "0", "20", "12", "x^75 + 2*x^55 + 2*x^50 + 2*x^30 + 2*x^25 + 2*x^5
++ 1" ]
+[ "75", "20", "20", "0", "12", "3*x^55 + 3*x^50 + x^45 + 3*x^40 + 2*x^35 + x^30 
++ 3*x^20 + x^15 + 2*x^10 + 1" ]
+
+main(
+)
+characteristics(
+    n: 75,
+    generator: 3*x^35 + 2*x^25 + 2*x^20 + 3*x^15 + 2*x^10 + 3*x^5 + 1
+)
+In file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len75.m", line 50, column 
+36:
+>>         penu_list:=[n,Dim, k1, k2, MinLeeW];
+                                      ^
+Runtime error: Variable 'MinLeeW' has not been initialized
+
+
+Total time: 0.380 seconds, Total memory usage: 32.09MB

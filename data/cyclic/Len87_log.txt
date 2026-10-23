@@ -1,0 +1,28 @@
+Magma V2.28-8     Fri Jun 14 2024 11:22:26 on supercomputer [Seed = 2307097647]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len87.m"
+[ "87", "0", "0", "0", "174", "3*x^87 + 1" ]
+[ "87", "28", "28", "0", "6", "3*x^59 + x^58 + 3*x^30 + x^29 + 3*x + 1" ]
+[ "87", "28", "0", "28", "12", "x^87 + 2*x^59 + 2*x^58 + 2*x^30 + 2*x^29 + 2*x +
+1" ]
+[ "87", "28", "28", "0", "-1", "3*x^59 + x^58 + 2*x^55 + 3*x^54 + 3*x^53 + x^51 
++ x^50 + 2*x^49 + 2*x^47 + x^46 + x^45 + x^44 + 2*x^43 + 3*x^42 + 2*x^41 + x^40 
++ 3*x^37 + x^35 + 3*x^33 + x^32 + x^31 + 3*x^30 + 2*x^29 + 2*x^26 + x^25 + x^24 
++ 3*x^22 + 3*x^21 + 2*x^20 + 2*x^18 + 3*x^17 + 3*x^16 + 3*x^15 + 2*x^14 + x^13 +
+2*x^12 + 3*x^11 + x^8 + 3*x^6 + x^4 + 3*x^3 + 3*x^2 + 2*x + 1" ]
+
+main(
+)
+characteristics(
+    n: 87,
+    generator: 3*x^31 + 2*x^30 + 3*x^29 + 2*x^27 + x^26 + x^24 + x^23 + x^2...
+)
+In file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len87.m", line 50, column 
+36:
+>>         penu_list:=[n,Dim, k1, k2, MinLeeW];
+                                      ^
+Runtime error: Variable 'MinLeeW' has not been initialized
+
+
+Total time: 69.349 seconds, Total memory usage: 32.09MB

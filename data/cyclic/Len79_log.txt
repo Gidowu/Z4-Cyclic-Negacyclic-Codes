@@ -1,0 +1,20 @@
+Magma V2.28-8     Fri Jun 14 2024 11:22:25 on supercomputer [Seed = 2610009661]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len79.m"
+[ "79", "0", "0", "0", "158", "3*x^79 + 1" ]
+
+main(
+)
+characteristics(
+    n: 79,
+    generator: 3*x^40 + x^39 + 2*x^38 + 3*x^37 + x^35 + 2*x^33 + 3*x^32 + 2...
+)
+In file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len79.m", line 50, column 
+36:
+>>         penu_list:=[n,Dim, k1, k2, MinLeeW];
+                                      ^
+Runtime error: Variable 'MinLeeW' has not been initialized
+
+
+Total time: 0.050 seconds, Total memory usage: 32.09MB

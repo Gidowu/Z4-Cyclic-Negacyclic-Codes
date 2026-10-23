@@ -1,0 +1,6 @@
+Magma V2.28-8     Fri Jun 14 2024 11:22:25 on supercomputer [Seed = 1937342167]
+Type ? for help.  Type <Ctrl>-D to quit.
+
+Loading file "/home/belghith1/Exhaustive_Z4/Cyclic/Input/Len59.m"
+[ "59", "0", "0", "0", "118", "3*x^59 + 1" ]
+[ "59", "58", "58", "0", "2", "3*x + 1" ]
